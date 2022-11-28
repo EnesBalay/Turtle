@@ -35,7 +35,7 @@ namespace Turtle.Controllers
         public async Task<IActionResult> Index(User p)
         {
             Context c = new Context();
-            var datavalue = c.Users.FirstOrDefault(x => x.UserName == p.UserName && x.Password == p.Password && x.AccountType == p.AccountType);
+            var datavalue = c.Users.FirstOrDefault(x => x.UserName == p.UserName && x.Password == p.Password);
             if (datavalue != null)
             {
                 var claims = new List<Claim>
@@ -45,32 +45,16 @@ namespace Turtle.Controllers
                 var useridentity = new ClaimsIdentity(claims, "a");
                 ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
                 await HttpContext.SignInAsync(principal);
-                if (datavalue.AccountType == "Admin")
-                {
-                    return RedirectToAction("Home", "Admin");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                if (p.AccountType == "Admin")
-                {
-                    ViewBag.LoginErrorAdmin = "Kullanıcı adı ya da şifre hatalı!";
-                    ViewBag.AccountType = "Admin";
-                    ViewBag.UsernameAdmin = p.UserName;
-                    return View();
-                }
-                else
-                {
+                ViewBag.LoginSuccessUser = "Giriş Başarılı!";
+                ViewBag.AccountType = "User";
+                ViewBag.UsernameUser = p.UserName;
+            }else{
                     ViewBag.LoginErrorUser = "Kullanıcı adı ya da şifre hatalı!";
                     ViewBag.AccountType = "User";
                     ViewBag.UsernameUser = p.UserName;
-                    return View();
-                }
+
             }
+            return View();
         }
 
         [HttpGet]
