@@ -34,8 +34,7 @@ namespace Turtle.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index(User p)
         {
-            Context c = new Context();
-            var datavalue = c.Users.FirstOrDefault(x => x.UserName == p.UserName && x.Password == p.Password);
+            User datavalue = userManager.GetUserByIdentityName(p.UserName);
             if (datavalue != null)
             {
                 var claims = new List<Claim>
