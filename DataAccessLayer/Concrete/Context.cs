@@ -13,7 +13,7 @@ namespace DataAccessLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseMySql("server=localhost;port=3306;database=turtledb;user=root;password=123Enes123", new MySqlServerVersion(new Version(8, 0, 31)));
+            optionBuilder.UseMySql("server=localhost;port=3306;database=turtledb;user=root;password=2001atalay", new MySqlServerVersion(new Version(8, 0, 31)));
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Meeting> Meetings { get; set; }

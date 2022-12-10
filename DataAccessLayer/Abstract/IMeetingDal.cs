@@ -9,5 +9,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface IMeetingDal : IGenericDal<Meeting>
     {
+        public Meeting GetMeetingWithIdentityName(string userName);
+        public List<Meeting> GetMeetingsBySearch(string search);
     }
 }
