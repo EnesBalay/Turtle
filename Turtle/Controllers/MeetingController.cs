@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BussinessLayer.Concrete;
-using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
+using BussinessLayer.ValidationRules;
+using FluentValidation.Results;
 
 namespace Turtle.Controllers
 
@@ -15,32 +11,50 @@ namespace Turtle.Controllers
     public class MeetingController : Controller
     {
         MeetingManager meetingManager=new MeetingManager(new EfMeetingRepository());
-        [AllowAnonymous]
+        UserManager userManager = new UserManager(new EfUserRepository());
         public IActionResult Index()
+        {
+            var allMeetings = meetingManager.GetListAll();
+            return View(allMeetings);
+        }
+        public IActionResult AddMeeting()
         {
             return View();
         }
         [HttpPost]
-        [AllowAnonymous]
-        public IActionResult Index(Meeting newMeeting)
+        public IActionResult AddMeeting(Meeting newMeeting)
         {
-            Meeting meeting = new Meeting();
-            meeting.MeetingName = meeting.MeetingName;
-            meeting.MeetingDuration = meeting.MeetingDuration;
-            meeting.CreateDate = DateTime.Now;
-            meeting.PlanningDate = meeting.PlanningDate;
-            meeting.Location = meeting.Location;
-            meeting.UserID = 1;
-            meetingManager.Add(meeting);
-            ViewBag.MeetingSuccess = "Toplantı oluşturuldu.";
-            return View();
-            
-           
-        }
+            var userValues = userManager.GetUserByIdentityName(User.Identity.Name);
+            MeetingValidator uv = new MeetingValidator();
+            ValidationResult results = uv.Validate(newMeeting);
+            if (results.IsValid)
+            {
+                Meeting meeting = new Meeting();
+                meeting.MeetingName = newMeeting.MeetingName;
+                meeting.MeetingDuration = newMeeting.MeetingDuration;
+                meeting.CreateDate = DateTime.Now;
+                meeting.PlanningDate = newMeeting.PlanningDate;
+                meeting.Location = newMeeting.Location;
+                meeting.Description = newMeeting.Description;
+                meeting.UserID = userValues.UserID;
+                meetingManager.Add(meeting);
+                ViewBag.MeetingSuccess = "Toplantı oluşturuldu.";
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
 
- public IActionResult AddMeeting()
-        {
             return View();
+        }
+        public IActionResult DeleteMeeting(int id)
+        {
+            var meetingValue = meetingManager.GetById(id);
+            meetingManager.Remove(meetingValue);
+            return RedirectToAction("Index", "Meeting");
         }
     }
 }

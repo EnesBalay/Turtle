@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EntityLayer.Concrete
 {
@@ -12,6 +7,7 @@ namespace EntityLayer.Concrete
         [Key]
         public int MeetingID { get; set; }
         public string MeetingName { get; set; }
+        public string? Description { get; set; }
         public DateTime PlanningDate { get; set; }
         public DateTime? CreateDate { get; set; }
         public string Location { get; set; }
