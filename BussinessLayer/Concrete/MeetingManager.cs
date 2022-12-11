@@ -31,9 +31,9 @@ namespace BussinessLayer.Concrete
             return _meetingDal.GetAll();
         }
 
-        public Meeting GetMeetingByIdentityName(string meetingName)
+        public Meeting GetMeetingByIdentityName(string meetingID)
         {
-            return _meetingDal.GetMeetingWithIdentityName(meetingName);
+            return _meetingDal.GetMeetingWithIdentityName(meetingID);
         }
 
         public List<Meeting> GetMeetingBySearch(string search)

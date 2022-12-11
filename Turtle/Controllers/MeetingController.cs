@@ -25,11 +25,13 @@ namespace Turtle.Controllers
         public IActionResult Index(Meeting newMeeting)
         {
             Meeting meeting = new Meeting();
-            meeting.MeetingName = newMeeting.MeetingName;
-            meeting.MeetingDuration = newMeeting.MeetingDuration;
+            meeting.MeetingName = meeting.MeetingName;
+            meeting.MeetingDuration = meeting.MeetingDuration;
             meeting.CreateDate = DateTime.Now;
-            meeting.PlanningDate = newMeeting.PlanningDate;
-            meetingManager.Add(newMeeting);
+            meeting.PlanningDate = meeting.PlanningDate;
+            meeting.Location = meeting.Location;
+            meeting.UserID = 1;
+            meetingManager.Add(meeting);
             ViewBag.MeetingSuccess = "Toplantı oluşturuldu.";
             return View();
             

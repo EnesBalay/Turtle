@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="page-header">
+    <h3 class="page-title"> Form elements </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Default form</h4>
+                <p class="card-description"> Basic form layout </p>
+                @using (Html.BeginForm("Index", "Meeting", FormMethod.Post, new { @class = "forms-sample", @enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Toplantı Başlığı</label>
+                        <input name="MeetingName" type="text" class="form-control bg-transparent border-0" placeholder="Toplantı Başlığı">
+                    </div>
+                    <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                }
+            </div>
+        </div>
+    </div>
+    </div>

@@ -356,3 +356,5 @@ DataAccessLayer/Migrations/20221208193134_InitialCreate.cs
 DataAccessLayer/Migrations/20221208193134_InitialCreate.Designer.cs
 DataAccessLayer/Migrations/20221127151612_first.Designer.cs
 DataAccessLayer/Concrete/Context.cs
+DataAccessLayer/Concrete/Context.cs
+DataAccessLayer/Concrete/Context.cs
