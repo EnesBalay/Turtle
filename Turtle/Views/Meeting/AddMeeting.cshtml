@@ -1,6 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model EntityLayer.Concrete.Meeting
+
 @{
 }
 <div class="page-header">
@@ -17,37 +16,47 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Toplantı Oluştur</h4>
-				<br />
-                
-                @using (Html.BeginForm("Index", "Meeting", FormMethod.Post, new { @class = "forms-sample", @enctype = "multipart/form-data" }))
+                <br />
+
+                @using (Html.BeginForm("AddMeeting", "Meeting", FormMethod.Post, new { @class = "forms-sample", @enctype = "multipart/form-data" }))
                 {
                     <div class="form-group">
-					  <label for="exampleInputUsername1">Toplantı Başlığı</label>
-					  <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Toplantı Başlığı">
-					</div>
-					<div class="form-group">
-					  <label for="exampleInputEmail1">Toplantı Konumu</label>
-					  <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Toplantı Konumu">
-					</div>
-					<div class="form-group">
-					  <label for="exampleInputPassword1">Toplantı Tarihi</label>
-					  <input type="date" class="form-control" id="exampleInputPassword1" placeholder="Password">
-					</div>
-					<div class="form-group">
-					  <label for="exampleInputConfirmPassword1">Toplantı Süresi</label> 
-					  <br>
-					  <select id="exampleInputPassword1" class="form-control" aria-placeholder="Toplantı Süresi"><option selected disabled>Toplantı Süresini Seçin</option>
-						<option value="45">45 Dk</option>
-						<option value="90">90 Dk</option>
-						<option value="135">135 Dk</option>
-						<option value="180">180 Dk</option></select>
-					  
-					</div>
-					
-					<button type="submit" class="btn btn-gradient-primary mr-2">Oluştur</button>
-					<button class="btn btn-light">İptal</button>
+                        <label for="MeetingName">Toplantı Başlığı</label>
+                        <input type="text" class="form-control" name="MeetingName" id="MeetingName" placeholder="Toplantı Başlığı" maxlength="32" minlength="3" required>
+                        @Html.ValidationMessageFor(x=>x.MeetingName,"",new{@class="text-danger"})
+                    </div>  
+                    <div class="form-group">
+                        <label for="Description">Toplantı Açıklaması (İsteğe Bağlı)</label>
+                        <textarea class="form-control" name="Description" id="Description" placeholder="Toplantı Açıklaması" rows="6" minlength="3" maxlength="300"></textarea>
+                         @Html.ValidationMessageFor(x=>x.Description,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <label for="Location">Toplantı Konumu (İsteğe Bağlı)</label>
+                        <input type="text" class="form-control" name="Location" id="Location" placeholder="Toplantı Konumu">
+                        @Html.ValidationMessageFor(x=>x.Location,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <label for="PlanningDate">Toplantı Tarihi</label>
+                        <input type="datetime-local" class="form-control" name="PlanningDate" id="PlanningDate" placeholder="Toplantı Tarihi" required>
+                        @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <label for="MeetingDuration">Toplantı Süresi</label>
+                        <br>
+                        <select id="MeetingDuration" name="MeetingDuration" class="form-control" aria-placeholder="Toplantı Süresi" required>
+                            <option selected disabled>Toplantı Süresini Seçin</option>
+                            <option value="45">45 Dk</option>
+                            <option value="90">90 Dk</option>
+                            <option value="135">135 Dk</option>
+                            <option value="180">180 Dk</option>
+                        </select>
+                        @Html.ValidationMessageFor(x=>x.MeetingDuration,"",new{@class="text-danger"})
+                    </div>
+                    <p class="text-success">@ViewBag.MeetingSuccess</p>
+                    <button type="submit" class="btn btn-gradient-primary mr-2">Oluştur</button>
+                    <button class="btn btn-light">İptal</button>
                 }
             </div>
         </div>
     </div>
-    </div>
+</div>

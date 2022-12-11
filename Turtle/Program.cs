@@ -17,13 +17,19 @@ builder.Services.AddMvc(config =>
 });
 
 builder.Services.AddAuthentication(
+        //CookieAuthenticationDefaults.AuthenticationScheme)
+        //.AddCookie(x =>
+        //{
+        //    x.LoginPath = "/Login/Index";
+        //    x.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+        //    x.Cookie.MaxAge = x.ExpireTimeSpan;
+        //});
         CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(x =>
-        {
-            x.LoginPath = "/Login/Index";
-            x.ExpireTimeSpan = TimeSpan.FromMinutes(15);
-            x.Cookie.MaxAge = x.ExpireTimeSpan;
-        });
+            .AddCookie(x =>
+                {
+                    x.LoginPath = "/Login";
+                }
+);
 
 var app = builder.Build();
 

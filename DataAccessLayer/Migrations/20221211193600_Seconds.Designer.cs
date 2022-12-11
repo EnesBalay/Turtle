@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221211150748_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221211193600_Seconds")]
+    partial class Seconds
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,9 @@ namespace DataAccessLayer.Migrations
 
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Location")
                         .IsRequired()
