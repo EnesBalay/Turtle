@@ -38,6 +38,9 @@ namespace Turtle.Controllers
            
         }
 
-
+ public IActionResult AddMeeting()
+        {
+            return View();
+        }
     }
 }
