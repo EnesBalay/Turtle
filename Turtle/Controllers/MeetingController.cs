@@ -56,5 +56,28 @@ namespace Turtle.Controllers
             meetingManager.Remove(meetingValue);
             return RedirectToAction("Index", "Meeting");
         }
+        public IActionResult VoteMeeting(int id=0)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var meeting = meetingManager.GetById(id);
+         
+            if (meeting == null)
+            {
+                return NotFound();
+            }
+            return View(meeting);
+         
+        }
+        
+        public IActionResult VoteChoose(int p)
+        {
+            
+
+            return View(p);
+
+        }
     }
 }

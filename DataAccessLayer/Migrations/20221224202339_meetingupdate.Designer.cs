@@ -3,6 +3,7 @@ using System;
 using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221224202339_meetingupdate")]
+    partial class meetingupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,32 +104,6 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrete.VoteMail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("ChoosedDate")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MeetingID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MeetingID");
-
-                    b.ToTable("VoteMail");
-                });
-
             modelBuilder.Entity("EntityLayer.Concrete.Meeting", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.User", "User")
@@ -137,22 +113,6 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.VoteMail", b =>
-                {
-                    b.HasOne("EntityLayer.Concrete.Meeting", "meeting")
-                        .WithMany("Mails")
-                        .HasForeignKey("MeetingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("meeting");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.Meeting", b =>
-                {
-                    b.Navigation("Mails");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.User", b =>
