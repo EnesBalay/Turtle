@@ -34,6 +34,8 @@ namespace Turtle.Controllers
                 meeting.MeetingDuration = newMeeting.MeetingDuration;
                 meeting.CreateDate = DateTime.Now;
                 meeting.PlanningDate = newMeeting.PlanningDate;
+                meeting.PlanningDate2 = newMeeting.PlanningDate2;
+                meeting.PlanningDate3 = newMeeting.PlanningDate3;
                 meeting.Location = newMeeting.Location;
                 meeting.Description = newMeeting.Description;
                 meeting.UserID = userValues.UserID;
