@@ -73,7 +73,40 @@ namespace Turtle.Controllers
             return View(meeting);
          
         }
-        
+        public IActionResult EditMeeting(int id)
+        {
+            var meeting = meetingManager.GetById(id);
+
+            return View(meeting);
+
+        }
+        [HttpPost]
+        public IActionResult EditMeeting(Meeting updatedValues)
+        {
+            MeetingValidator uv = new MeetingValidator();
+            ValidationResult results = uv.Validate(updatedValues);
+            if (results.IsValid)
+            {
+
+                updatedValues.CreateDate = DateTime.Now;
+
+                meetingManager.Update(updatedValues);
+                ViewBag.MeetingSuccess = "Toplantı düzenlendi.";
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View();
+
+
+
+
+        }
+
         public IActionResult VoteChoose(int p)
         {
             

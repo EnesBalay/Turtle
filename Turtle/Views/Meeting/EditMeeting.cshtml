@@ -1,0 +1,150 @@
+﻿@model EntityLayer.Concrete.Meeting
+
+@{
+}
+
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/thinline.css">
+<link rel="stylesheet" href="/assets/css/mail-input.css">
+
+<div class="page-header">
+    <h3 class="page-title">  </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"></li>
+            <li class="breadcrumb-item active" aria-current="page"></li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Toplantı Oluştur</h4>
+                <br>
+
+                @using (Html.BeginForm("AddMeeting", "Meeting", FormMethod.Post, new { @class = "forms-sample", @enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group">
+                        <label for="MeetingName">Toplantı Başlığı</label>
+                        <input type="text" class="form-control" name="MeetingName" id="MeetingName" placeholder="Toplantı Başlığı" maxlength="32" minlength="3" required>
+                        @Html.ValidationMessageFor(x=>x.MeetingName,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <label for="Description">Toplantı Açıklaması (İsteğe Bağlı)</label>
+                        <textarea class="form-control" name="Description" id="Description" placeholder="Toplantı Açıklaması" rows="6" minlength="3" maxlength="300"></textarea>
+                        @Html.ValidationMessageFor(x=>x.Description,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <label for="Location">Toplantı Konumu (İsteğe Bağlı)</label>
+                        <input type="text" class="form-control" name="Location" id="Location" placeholder="Toplantı Konumu">
+                        @Html.ValidationMessageFor(x=>x.Location,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <label for="PlanningDate">Toplantı Tarihi</label>
+                        <input type="datetime-local" class="form-control" name="PlanningDate" id="PlanningDate" placeholder="Toplantı Tarihi" required>
+                        @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <label for="PlanningDate">Toplantı Tarihi</label>
+                        <input type="datetime-local" class="form-control" name="PlanningDate" id="PlanningDate" placeholder="Toplantı Tarihi" required>
+                        @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <label for="PlanningDate">Toplantı Tarihi</label>
+                        <input type="datetime-local" class="form-control" name="PlanningDate" id="PlanningDate" placeholder="Toplantı Tarihi" required>
+                        @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <label for="MeetingDuration">Toplantı Süresi</label>
+                        <br>
+                        <select id="MeetingDuration" name="MeetingDuration" class="form-control" aria-placeholder="Toplantı Süresi" required>
+                            <option selected disabled>Toplantı Süresini Seçin</option>
+                            <option value="45">45 Dk</option>
+                            <option value="90">90 Dk</option>
+                            <option value="135">135 Dk</option>
+                            <option value="180">180 Dk</option>
+                        </select>
+                        @Html.ValidationMessageFor(x=>x.MeetingDuration,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
+                        <div class="wrapper">
+                            <div class="content">
+                                <label for="ulMail">Toplantı Katılımcıları</label>
+                                <ul id="ulMail"><input id="mailInput" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" required /></ul>
+                            </div>
+                            <div class="details">
+                                <p><span>50</span> mail hakkınız kaldı.</p>
+                                <button>Tümünü Temizle</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-success">@ViewBag.MeetingSuccess</p>
+                    <button type="submit" class="btn btn-gradient-primary mr-2">Oluştur</button>
+                    <button class="btn btn-light">İptal</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ul = document.querySelector("ul#ulMail"),
+        input = document.querySelector("#mailInput"),
+        tagNumb = document.querySelector(".details span");
+
+    console.log(ul)
+
+    let maxTags = 50,
+        tags = [];
+
+    countTags();
+    createTag();
+
+    function countTags() {
+        input.focus();
+        tagNumb.innerText = maxTags - tags.length;
+    }
+
+    function createTag() {
+        ul.querySelectorAll("li").forEach(li => li.remove());
+        tags.slice().reverse().forEach(tag => {
+            let liTag = `<li>${tag} <i class="form-group" onclick="remove(this, '${tag}')"></i></li>`;
+            ul.insertAdjacentHTML("afterbegin", liTag);
+        });
+        countTags();
+        console.log(tags);
+    }
+
+    function remove(element, tag) {
+        let index = tags.indexOf(tag);
+        tags = [...tags.slice(0, index), ...tags.slice(index + 1)];
+        element.parentElement.remove();
+        countTags();
+    }
+
+    function addTag(e) {
+        if (e.key == ",") {
+            let tag = e.target.value.replace(/\s+/g, ' ');
+            if (tag.length > 1 && !tags.includes(tag)) {
+                if (tags.length < 50) {
+                    tag.split(',').forEach(tag => {
+                        if (tag != "") {
+                            tags.push(tag);
+                            createTag();
+                        }
+                    });
+                }
+            }
+            e.target.value = "";
+        }
+    }
+
+    input.addEventListener("keyup", addTag);
+
+    const removeBtn = document.querySelector(".details button");
+    removeBtn.addEventListener("click", () => {
+        tags.length = 0;
+        ul.querySelectorAll("li").forEach(li => li.remove());
+        countTags();
+    });
+</script>
