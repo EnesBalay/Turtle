@@ -85,11 +85,10 @@ namespace Turtle.Controllers
         {
             MeetingValidator uv = new MeetingValidator();
             ValidationResult results = uv.Validate(updatedValues);
+            
             if (results.IsValid)
             {
-
                 updatedValues.CreateDate = DateTime.Now;
-
                 meetingManager.Update(updatedValues);
                 ViewBag.MeetingSuccess = "Toplantı düzenlendi.";
             }

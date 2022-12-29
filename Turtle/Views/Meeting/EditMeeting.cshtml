@@ -25,6 +25,11 @@
                 @using (Html.BeginForm("EditMeeting", "Meeting", FormMethod.Post, new { @class = "forms-sample", @enctype = "multipart/form-data" }))
                 {
                     <div class="form-group">
+                        <label for="MeetingID">Id</label>
+                        <input type="text" class="form-control" name="MeetingID" value="@Model.MeetingID" id="MeetingID" placeholder="Id" maxlength="32" minlength="3" required disabled> 
+                        @Html.ValidationMessageFor(x=>x.MeetingID,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
                         <label for="MeetingName">Toplantı Başlığı</label>
                         <input type="text" class="form-control" name="MeetingName" value="@Model.MeetingName" id="MeetingName" placeholder="Toplantı Başlığı" maxlength="32" minlength="3" required>
                         @Html.ValidationMessageFor(x=>x.MeetingName,"",new{@class="text-danger"})
@@ -70,7 +75,7 @@
                         <div class="wrapper">
                             <div class="content">
                                 <label for="ulMail">Toplantı Katılımcıları</label>
-                                <ul id="ulMail"><input id="mailInput" value="@Model.Mails" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" required /></ul>
+                                <ul id="ulMail"><input id="mailInput" value="@Model.Mails" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" /></ul>
                             </div>
                             <div class="details">
                                 <p><span>50</span> mail hakkınız kaldı.</p>
