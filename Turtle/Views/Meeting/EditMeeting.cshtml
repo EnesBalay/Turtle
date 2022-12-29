@@ -22,42 +22,47 @@
                 <h4 class="card-title">Toplantı Oluştur</h4>
                 <br>
 
-                @using (Html.BeginForm("AddMeeting", "Meeting", FormMethod.Post, new { @class = "forms-sample", @enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("EditMeeting", "Meeting", FormMethod.Post, new { @class = "forms-sample", @enctype = "multipart/form-data" }))
                 {
                     <div class="form-group">
+                        <label for="MeetingID">Id</label>
+                        <input type="text" class="form-control" name="MeetingID" value="@Model.MeetingID" id="MeetingID" placeholder="Id" maxlength="32" minlength="3" required disabled> 
+                        @Html.ValidationMessageFor(x=>x.MeetingID,"",new{@class="text-danger"})
+                    </div>
+                    <div class="form-group">
                         <label for="MeetingName">Toplantı Başlığı</label>
-                        <input type="text" class="form-control" name="MeetingName" id="MeetingName" placeholder="Toplantı Başlığı" maxlength="32" minlength="3" required>
+                        <input type="text" class="form-control" name="MeetingName" value="@Model.MeetingName" id="MeetingName" placeholder="Toplantı Başlığı" maxlength="32" minlength="3" required>
                         @Html.ValidationMessageFor(x=>x.MeetingName,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
                         <label for="Description">Toplantı Açıklaması (İsteğe Bağlı)</label>
-                        <textarea class="form-control" name="Description" id="Description" placeholder="Toplantı Açıklaması" rows="6" minlength="3" maxlength="300"></textarea>
+                        <textarea class="form-control" name="Description" value="@Model.Description" id="Description" placeholder="Toplantı Açıklaması" rows="6" minlength="3" maxlength="300"></textarea>
                         @Html.ValidationMessageFor(x=>x.Description,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
                         <label for="Location">Toplantı Konumu (İsteğe Bağlı)</label>
-                        <input type="text" class="form-control" name="Location" id="Location" placeholder="Toplantı Konumu">
+                        <input type="text" class="form-control" value="@Model.Location" name="Location" id="Location" placeholder="Toplantı Konumu">
                         @Html.ValidationMessageFor(x=>x.Location,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
                         <label for="PlanningDate">Toplantı Tarihi</label>
-                        <input type="datetime-local" class="form-control" name="PlanningDate" id="PlanningDate" placeholder="Toplantı Tarihi" required>
+                        <input type="datetime-local" class="form-control" value="@Model.PlanningDate" name="PlanningDate" id="PlanningDate" placeholder="Toplantı Tarihi" required>
                         @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
                         <label for="PlanningDate2">Toplantı Tarihi</label>
-                        <input type="datetime-local" class="form-control" name="PlanningDate2" id="PlanningDate2" placeholder="Toplantı Tarihi" required>
-                        @Html.ValidationMessageFor(x=>x.PlanningDate2,"",new{@class="text-danger"})
+                        <input type="datetime-local" class="form-control" value="@Model.PlanningDate2" name="PlanningDate2" id="PlanningDate2" placeholder="Toplantı Tarihi" required>
+                        @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
                         <label for="PlanningDate3">Toplantı Tarihi</label>
-                        <input type="datetime-local" class="form-control" name="PlanningDate3" id="PlanningDate3" placeholder="Toplantı Tarihi" required>
-                        @Html.ValidationMessageFor(x=>x.PlanningDate3,"",new{@class="text-danger"})
+                        <input type="datetime-local" class="form-control" value="@Model.PlanningDate3" name="PlanningDate3" id="PlanningDate3" placeholder="Toplantı Tarihi" required>
+                        @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
                         <label for="MeetingDuration">Toplantı Süresi</label>
                         <br>
-                        <select id="MeetingDuration" name="MeetingDuration" class="form-control" aria-placeholder="Toplantı Süresi" required>
+                        <select id="MeetingDuration" value="@Model.MeetingDuration" name="MeetingDuration" class="form-control" aria-placeholder="Toplantı Süresi" required>
                             <option selected disabled>Toplantı Süresini Seçin</option>
                             <option value="45">45 Dk</option>
                             <option value="90">90 Dk</option>
@@ -70,7 +75,7 @@
                         <div class="wrapper">
                             <div class="content">
                                 <label for="ulMail">Toplantı Katılımcıları</label>
-                                <ul id="ulMail"><input id="mailInput" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" /></ul>
+                                <ul id="ulMail"><input id="mailInput" value="@Model.Mails" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" /></ul>
                             </div>
                             <div class="details">
                                 <p><span>50</span> mail hakkınız kaldı.</p>
@@ -79,7 +84,7 @@
                         </div>
                     </div>
                     <p class="text-success">@ViewBag.MeetingSuccess</p>
-                    <button type="submit" class="btn btn-gradient-primary mr-2">Oluştur</button>
+                    <button type="submit" class="btn btn-gradient-primary mr-2">GÜNCELLE</button>
                     <button class="btn btn-light">İptal</button>
                 }
             </div>

@@ -50,5 +50,7 @@ namespace BussinessLayer.Concrete
         {
             _meetingDal.Update(t);
         }
+
+       
     }
 }

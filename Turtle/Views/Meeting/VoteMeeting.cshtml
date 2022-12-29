@@ -1,0 +1,75 @@
+﻿@model EntityLayer.Concrete.Meeting
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@*<form>
+    <div class="form-group">
+        <h1>Toplantı Detayları</h1>
+        <div class="form-check">
+            <table>
+                <tr><td>Toplantı Tarihi</td><td>
+                 <input class="form-check-input" type="radio" name="planningDate" id="planningDate" value="@Model.PlanningDate@Model.MeetingName" checked></td></tr>
+            <input class="form-check-input" type="radio" name="MeetingName" id="MeetingName" value="@Model.MeetingName" checked>
+            <input class="form-check-input" type="radio" name="MeetingDuration" id="MeetingDuration" value="@Model.MeetingDuration" checked>
+            <label class="form-check-label" for="MeetingName">@Model.MeetingName</label>
+            <label class="form-check-label" for="MeetingDuration">@Model.MeetingDuration</label>
+            <label class="form-check-label" for="planingDate">@Model.PlanningDate</label>
+            </table>
+         
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="planningDate" id="planningDate" value="@Model.PlanningDate">
+            <label class="form-check-label" for="armut">@Model.PlanningDate</label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Oyla</button>
+</form>*@
+<div class="page-header">
+    <h3 class="page-title"> Toplantı Detayları </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            
+            <li class="breadcrumb-item active" aria-current="page"></li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+               
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                               
+                                <th>Toplantı Adı</th>
+                                <th>Toplantı Süresi</th>
+                                <th>Toplantı Tarihi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate</td>  <td><button type="submit" class="btn btn-primary">Onayla</button></td></tr>
+                        <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate2</td>  <td><button type="submit" class="btn btn-primary">Onayla</button></td></tr>
+                        <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate3</td>  <td><button type="submit" class="btn btn-primary">Onayla</button></td></tr>
+                               
+                            
+                        </tbody>
+                    </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
