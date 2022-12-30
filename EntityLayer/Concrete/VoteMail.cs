@@ -9,6 +9,7 @@ namespace EntityLayer.Concrete
         public string email { get; set; }
         public bool status { get; set; }
         public int ChoosedDate { get; set; }
+        public int MeetingId { get; set; }
         public Meeting meeting { get; set; }
         
     }

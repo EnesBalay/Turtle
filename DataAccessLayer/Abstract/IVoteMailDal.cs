@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Abstract
 {
-    public interface IVoteMeetingDal:IGenericDal<VoteMail>
+    public interface IVoteMailDal:IGenericDal<VoteMail>
     {
-        public VoteMail GetVoteWithIdentityName(string Id);
-        public List<VoteMail> GetVotesBySearch(string search);
+        public List<VoteMail> GetVoteMailsByMeetingId(int meetingId);
     }
 }

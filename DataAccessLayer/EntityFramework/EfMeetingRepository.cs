@@ -18,10 +18,25 @@ namespace DataAccessLayer.EntityFramework
             return c.Meetings.Where(x => x.MeetingName.ToLower().Contains(search.ToLower())).ToList();
         }
 
+        public int AddReturnId(Meeting meeting)
+        {
+            using var c = new Context();
+            c.Add(meeting);
+            c.SaveChanges();
+            return meeting.MeetingID;
+        }
+
+
         public Meeting GetMeetingWithIdentityName(string meetingName)
         {
             using var c = new Context();
             return c.Meetings.FirstOrDefault(x => x.MeetingName == meetingName);
+        }
+
+        public List<Meeting> GetMeetingsByUserId(int userId)
+        {
+            using var c = new Context();
+            return c.Meetings.Where(x => x.UserID == userId).ToList();
         }
     }
 }

@@ -26,7 +26,7 @@
                 {
                     <div class="form-group">
                         <label for="MeetingID">Id</label>
-                        <input type="text" class="form-control" name="MeetingID" value="@Model.MeetingID" id="MeetingID" placeholder="Id" maxlength="32" minlength="3" required disabled> 
+                        <input type="text" class="form-control" name="MeetingID" value="@Model.MeetingID" id="MeetingID" placeholder="Id" disabled>
                         @Html.ValidationMessageFor(x=>x.MeetingID,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Description">Toplantı Açıklaması (İsteğe Bağlı)</label>
-                        <textarea class="form-control" name="Description" value="@Model.Description" id="Description" placeholder="Toplantı Açıklaması" rows="6" minlength="3" maxlength="300"></textarea>
+                        <textarea class="form-control" name="Description" id="Description" placeholder="Toplantı Açıklaması" rows="6" minlength="3" maxlength="300">@Model.Description</textarea>
                         @Html.ValidationMessageFor(x=>x.Description,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
@@ -46,28 +46,70 @@
                     </div>
                     <div class="form-group">
                         <label for="PlanningDate">Toplantı Tarihi</label>
-                        <input type="datetime-local" class="form-control" value="@Model.PlanningDate" name="PlanningDate" id="PlanningDate" placeholder="Toplantı Tarihi" required>
+                        <p id="currentPD">@Model.PlanningDate</p>
+                        <input style="display:none;margin-bottom:10px;" type="datetime-local" class="form-control" name="PlanningDate" id="PlanningDate" placeholder="Toplantı Tarihi">
+                        <button type="button" class="btn btn-primary" id="pDate" onclick="ChangeToPDate('#PlanningDate','none','#currentPD',this)">Düzenle</button>
                         @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
                         <label for="PlanningDate2">Toplantı Tarihi</label>
-                        <input type="datetime-local" class="form-control" value="@Model.PlanningDate2" name="PlanningDate2" id="PlanningDate2" placeholder="Toplantı Tarihi" required>
+                        <p id="currentPD2">@Model.PlanningDate2</p>
+                        <input style="display:none;margin-bottom:10px;" type="datetime-local" class="form-control" name="PlanningDate2" id="PlanningDate2" placeholder="Toplantı Tarihi">
+                        <button type="button" class="btn btn-primary" id="pDate2" onclick="ChangeToPDate('#PlanningDate2','none','#currentPD2',this)">Düzenle</button>
                         @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
                         <label for="PlanningDate3">Toplantı Tarihi</label>
-                        <input type="datetime-local" class="form-control" value="@Model.PlanningDate3" name="PlanningDate3" id="PlanningDate3" placeholder="Toplantı Tarihi" required>
+                        <p id="currentPD3">@Model.PlanningDate3</p>
+                        <input style="display:none;margin-bottom:10px;" type="datetime-local" class="form-control" name="PlanningDate3" id="PlanningDate3" placeholder="Toplantı Tarihi">
+                        <button type="button" class="btn btn-primary" id="pDate3" onclick="ChangeToPDate('#PlanningDate3','none','#currentPD3',this)">Düzenle</button>
                         @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
                         <label for="MeetingDuration">Toplantı Süresi</label>
                         <br>
-                        <select id="MeetingDuration" value="@Model.MeetingDuration" name="MeetingDuration" class="form-control" aria-placeholder="Toplantı Süresi" required>
-                            <option selected disabled>Toplantı Süresini Seçin</option>
-                            <option value="45">45 Dk</option>
-                            <option value="90">90 Dk</option>
-                            <option value="135">135 Dk</option>
-                            <option value="180">180 Dk</option>
+                        <select id="MeetingDuration" name="MeetingDuration" class="form-control" aria-placeholder="Toplantı Süresi" required>
+                            @if (@Model.MeetingDuration == 45)
+                            {
+                                <option disabled>Toplantı Süresini Seçin</option>
+                                <option selected value="45">45 Dk</option>
+                                <option value="90">90 Dk</option>
+                                <option value="135">135 Dk</option>
+                                <option value="180">180 Dk</option>
+                            }
+                            else if (@Model.MeetingDuration == 90)
+                            {
+                                <option disabled>Toplantı Süresini Seçin</option>
+                                <option value="45">45 Dk</option>
+                                <option selected value="90">90 Dk</option>
+                                <option value="135">135 Dk</option>
+                                <option value="180">180 Dk</option>
+                            }
+                            else if (@Model.MeetingDuration == 135)
+                            {
+                                <option disabled>Toplantı Süresini Seçin</option>
+                                <option value="45">45 Dk</option>
+                                <option value="90">90 Dk</option>
+                                <option selected value="135">135 Dk</option>
+                                <option value="180">180 Dk</option>
+                            }
+                            else if (@Model.MeetingDuration == 180)
+                            {
+                                <option disabled>Toplantı Süresini Seçin</option>
+                                <option value="45">45 Dk</option>
+                                <option value="90">90 Dk</option>
+                                <option value="135">135 Dk</option>
+                                <option selected value="180">180 Dk</option>
+                            }
+                            else
+                            {
+                                <option disabled>Toplantı Süresini Seçin</option>
+                                <option value="45">45 Dk</option>
+                                <option value="90">90 Dk</option>
+                                <option value="135">135 Dk</option>
+                                <option value="180">180 Dk</option>
+                            }
+
                         </select>
                         @Html.ValidationMessageFor(x=>x.MeetingDuration,"",new{@class="text-danger"})
                     </div>
@@ -152,4 +194,26 @@
         ul.querySelectorAll("li").forEach(li => li.remove());
         countTags();
     });
+
+    function ChangeToPDate(id, state, text, button) {
+        if (state == 'none') {
+            var btnFunction = "ChangeToPDate('" + id + "','block','" + text + "',this)"
+            document.querySelector(id).style.display = "block";
+            button.textContent = 'İptal';
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-danger');
+            button.setAttribute("onclick", btnFunction)
+            document.querySelector(text).style.display="none";
+        }
+
+        if (state == 'block') {
+            var btnFunction = "ChangeToPDate('" + id + "','none','"+text+"',this)"
+            document.querySelector(id).style.display = "none";
+            button.textContent = 'Düzenle';
+            button.classList.remove('btn-danger');
+            button.classList.add('btn-primary');
+            button.setAttribute("onclick", btnFunction)
+            document.querySelector(text).style.display = "block";
+        }
+    }
 </script>

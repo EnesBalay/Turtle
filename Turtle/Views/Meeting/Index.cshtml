@@ -29,6 +29,7 @@
                                 <th>Toplantı Adı</th>
                                 <th>Toplantı Süresi</th>
                                 <th>Toplantı Konumu</th>
+                                <th>Katılımcılar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,7 +48,18 @@
                                     <td>
                                         @item.Location
                                     </td>
-                                    <td><button onclick="AreYouSureDeleteMeeting(this)" class="btn btn-danger"><i class="mdi mdi-delete"></i> Sil</button></td>
+                                    <td>
+                                        <ul>
+                                            @foreach (var mail in item.Mails)
+                                            {
+                                                <li>@mail.email</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <a href="/Meeting/EditMeeting/@item.MeetingID" class="btn btn-info"><i class="mdi mdi-info"></i> Düzenle</a>
+                                        <button onclick="AreYouSureDeleteMeeting(this)" class="btn btn-danger"><i class="mdi mdi-delete"></i> Sil</button>
+                                    </td>
                                 </tr>
                             }
                         </tbody>

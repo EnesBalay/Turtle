@@ -36,3 +36,29 @@ function formatNumber(n) {
     // format number 1000000 to 1,234,567
     return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 }
+
+function AreYouSureSendMail(x) {
+    var form = x.parents('form');
+    swal({
+        title: "Silme İşlemi",
+        content: wrapper,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willAdd) => {
+            if (willAdd) {
+                swal("Mailler onaylandı 3 saniye sonra toplantı eklenecektir!. Lütfen bekleyiniz.", {
+                    icon: "success",
+                    buttons: false
+                });
+
+
+
+            } else {
+                swal("İşlem iptal edildi toplantınız güvende!", {
+                    icon: "info"
+                });
+            }
+        });
+}
