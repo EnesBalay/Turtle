@@ -11,5 +11,7 @@ namespace DataAccessLayer.Abstract
     {
         public Meeting GetMeetingWithIdentityName(string meetingID);
         public List<Meeting> GetMeetingsBySearch(string search);
+        public int AddReturnId(Meeting meeting);
+        public List<Meeting> GetMeetingsByUserId(int userId);
     }
 }

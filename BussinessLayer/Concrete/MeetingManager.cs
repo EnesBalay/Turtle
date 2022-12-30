@@ -21,6 +21,11 @@ namespace BussinessLayer.Concrete
             _meetingDal.Add(t);
         }
 
+        public int AddReturnId(Meeting meeting)
+        {
+            return _meetingDal.AddReturnId(meeting);
+        }
+
         public Meeting GetById(int id)
         {
             return _meetingDal.GetByID(id);
@@ -39,6 +44,11 @@ namespace BussinessLayer.Concrete
         public List<Meeting> GetMeetingBySearch(string search)
         {
             return _meetingDal.GetMeetingsBySearch(search);
+        }
+
+        public List<Meeting> GetMeetingsByUserId(int userId)
+        {
+            return _meetingDal.GetMeetingsByUserId(userId);
         }
 
         public void Remove(Meeting t)

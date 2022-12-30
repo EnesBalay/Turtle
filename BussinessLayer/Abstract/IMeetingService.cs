@@ -11,5 +11,7 @@ namespace BussinessLayer.Abstract
     {
         public Meeting GetMeetingByIdentityName(String meetingName);
         public List<Meeting> GetMeetingBySearch(String search);
+        public int AddReturnId(Meeting meeting);
+        public List<Meeting> GetMeetingsByUserId(int userId);
     }
 }

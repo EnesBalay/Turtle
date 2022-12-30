@@ -17,5 +17,6 @@ namespace DataAccessLayer.Concrete
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<VoteMail> VoteMails { get; set; }
     }
 }

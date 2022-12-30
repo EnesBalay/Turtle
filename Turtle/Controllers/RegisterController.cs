@@ -25,12 +25,13 @@ namespace Turtle.Controllers
             if (results.IsValid)
             {
                 User user = new User();
+                user.UserName= newUser.UserName;
                 user.Name = newUser.Name;
                 user.Email = newUser.Email;
                 user.Password = newUser.Password;
                 user.Surname = newUser.Surname;
                 user.AccountType = "User";
-                userManager.Add(newUser);
+                userManager.Add(user);
                 ViewBag.RegisterSuccess = "Kayıt Başarılı";
                 return View();
             }
