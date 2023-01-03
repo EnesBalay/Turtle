@@ -56,7 +56,7 @@ namespace Turtle.Controllers
                     mail.status = true;
                     mail.MeetingId = newMeetingId;
                     VoteMailManager.Add(mail);
-                    sendToMail(item);
+                    //sendToMail(item);
                 }
                 ViewBag.MeetingSuccess = "Toplantı oluşturuldu.";
             }
@@ -108,9 +108,11 @@ namespace Turtle.Controllers
         {
             MeetingValidator uv = new MeetingValidator();
             ValidationResult results = uv.Validate(updatedValues);
+            var meeting = meetingManager.GetById(updatedValues.MeetingID);
+            meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
             if (results.IsValid)
             {
-                var meeting = meetingManager.GetById(updatedValues.MeetingID);
+                
                 meeting.MeetingDuration = updatedValues.MeetingDuration;
                 if (updatedValues.PlanningDate!=null)
                 {
@@ -139,19 +141,12 @@ namespace Turtle.Controllers
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
             }
-            return View();
-
-
-
-
+            return View(meeting);
         }
 
         public IActionResult VoteChoose(int p)
         {
-            
-
             return View(p);
-
         }
     }
 }
