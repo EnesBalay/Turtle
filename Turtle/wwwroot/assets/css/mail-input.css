@@ -98,3 +98,8 @@
     .details button:hover {
         background: #2c52ed;
     }
+.detais button #mailOnay {
+    position:absolute;
+    right:1500px;
+
+}

@@ -6,13 +6,12 @@
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/thinline.css">
 <link rel="stylesheet" href="/assets/css/mail-input.css">
 
+
+
 <div class="page-header">
-    <h3 class="page-title">  </h3>
+    
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"></li>
-            <li class="breadcrumb-item active" aria-current="page"></li>
-        </ol>
+        
     </nav>
 </div>
 <div class="row">
@@ -68,17 +67,19 @@
                         <div class="wrapper">
                             <div class="content">
                                 <label for="ulMail">Toplantı Katılımcıları</label>
-                                <ul id="sendMails"><input id="mailInput" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" /></ul><button class="btn btn-primary" type="button" onclick="createTagForPost()">Onayla</button>
+                                <ul id="sendMails"><input id="mailInput" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" /></ul>
                             </div>
                             <div class="details">
                                 <p><span>50</span> mail hakkınız kaldı.</p>
+                                <button  id="mailOnay" type="button" onclick="createTagForPost()">Onayla</button>
+                                
                                 <button>Tümünü Temizle</button>
                             </div>
                         </div>
 
                     </div>
-                    <div class="form-group">
-                        <select class="form-control" aria-label="SendMails" name="SendMails" id="sendMailInput" multiple>
+                    <div class="d-none">
+                        <select class="form-control1" aria-label="SendMails" name="SendMails" id="sendMailInput" multiple>
                         </select>
                     </div>
                     <p class="text-success">@ViewBag.MeetingSuccess</p>

@@ -117,7 +117,12 @@
                         <div class="wrapper">
                             <div class="content">
                                 <label for="ulMail">Toplantı Katılımcıları</label>
-                                <ul id="ulMail"><input id="mailInput" value="@Model.Mails" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" /></ul>
+                                <ul id="ulMail">
+                                    @foreach(var mail in Model.Mails)
+                                    {
+                                        <li selected="" value="@mail.email">@mail.email <i class="form-group" onclick="remove(this, '@mail.email')"></i></li>
+                                    }
+                                    <input id="mailInput"  type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" /></ul>
                             </div>
                             <div class="details">
                                 <p><span>50</span> mail hakkınız kaldı.</p>
