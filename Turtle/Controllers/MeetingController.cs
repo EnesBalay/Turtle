@@ -4,6 +4,9 @@ using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using BussinessLayer.ValidationRules;
 using FluentValidation.Results;
+using Microsoft.Exchange.WebServices.Data;
+
+
 
 namespace Turtle.Controllers
 
@@ -56,7 +59,7 @@ namespace Turtle.Controllers
                     mail.status = true;
                     mail.MeetingId = newMeetingId;
                     VoteMailManager.Add(mail);
-                    //sendToMail(item);
+                    sendToMail(item);
                 }
                 ViewBag.MeetingSuccess = "Toplantı oluşturuldu.";
             }
@@ -73,8 +76,25 @@ namespace Turtle.Controllers
 
         public void sendToMail(string mail)
         {
+            var mailList = mail.Split(';').ToList();
+            // Outlook'a erişmek için ExchangeService nesnesi oluşturun ve gerekli bilgileri doldurun
+            ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+            service.Credentials = new WebCredentials("turtledou@outlook.com", "123Turtle123");
+            service.Url = new Uri("https://outlook.office365.com/EWS/Exchange.asmx");
 
+            // E-posta nesnesini oluşturun ve gerekli bilgileri doldurun
+            EmailMessage email = new EmailMessage(service);
+            foreach (string mailAddress in mailList)
+            {
+                email.ToRecipients.Add(mailAddress);
+            }
+            email.Subject = "Turtle";
+            email.Body = new MessageBody("Toplantınız oluşturuldu.");
+
+            // E-postayı gönderin
+            email.Send();
         }
+
 
         public IActionResult DeleteMeeting(int id)
         {
