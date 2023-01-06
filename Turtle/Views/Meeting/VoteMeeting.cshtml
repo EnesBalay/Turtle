@@ -3,73 +3,147 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" />
+</head>
+<body>
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo" href="/"><b>Turtle</b></a>
+            <a class="navbar-brand brand-logo-mini" href="/"><b>Turtle</b></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="mdi mdi-menu"></span>
+            </button>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item d-none d-lg-block full-screen-link">
+                    <a class="nav-link">
+                        <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                    </a>
+                </li>
 
-@*<form>
-    <div class="form-group">
-        <h1>Toplantı Detayları</h1>
-        <div class="form-check">
-            <table>
-                <tr><td>Toplantı Tarihi</td><td>
-                 <input class="form-check-input" type="radio" name="planningDate" id="planningDate" value="@Model.PlanningDate@Model.MeetingName" checked></td></tr>
-            <input class="form-check-input" type="radio" name="MeetingName" id="MeetingName" value="@Model.MeetingName" checked>
-            <input class="form-check-input" type="radio" name="MeetingDuration" id="MeetingDuration" value="@Model.MeetingDuration" checked>
-            <label class="form-check-label" for="MeetingName">@Model.MeetingName</label>
-            <label class="form-check-label" for="MeetingDuration">@Model.MeetingDuration</label>
-            <label class="form-check-label" for="planingDate">@Model.PlanningDate</label>
-            </table>
-         
+                <li class="nav-item nav-logout d-none d-lg-block">
+                    <a class="nav-link" href="/Login/Logout">
+                        <i class="mdi mdi-power"></i>
+                    </a>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="mdi mdi-menu"></span>
+            </button>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="planningDate" id="planningDate" value="@Model.PlanningDate">
-            <label class="form-check-label" for="armut">@Model.PlanningDate</label>
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Oyla</button>
-</form>*@
-<div class="page-header">
-    <h3 class="page-title"> Toplantı Detayları </h3>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            
-            <li class="breadcrumb-item active" aria-current="page"></li>
-        </ol>
     </nav>
-</div>
-<div class="row">
-    <div class="col-md-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
 
-               
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                               
-                                <th>Toplantı Adı</th>
-                                <th>Toplantı Süresi</th>
-                                <th>Toplantı Tarihi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+    <div class="container-fluid page-body-wrapper">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+            </ul>
+        </nav>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                    @if (ViewBag.VoterMail==null)
+                    {
+                        <form method="post">
+                            @Html.HiddenFor(x=>x.MeetingID)
+                            <div class="form-group">
+                                <label>E-Posta Adresi</label>
+                                <input name="voterMail" />
+                            </div>
+                        <p class="text-danger">@ViewBag.VoteError</p>
+                            <button class="btn btn-primary" type="submit">Giriş</button>
+                        </form>
+                       
+                    }else{
+                    <div class="page-header">
+                        <h3 class="page-title"> Toplantı Detayları </h3>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
 
-                        <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate</td>  <td><button type="submit" class="btn btn-primary">Oyla</button></td></tr>
-                        <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate2</td>  <td><button type="submit" class="btn btn-primary">Oyla</button></td></tr>
-                        <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate3</td>  <td><button type="submit" class="btn btn-primary">Oyla</button></td></tr>
-                               
-                            
-                        </tbody>
-                    </table>
-                
+                                <li class="breadcrumb-item active" aria-current="page"></li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+
+                                                <th>Toplantı Adı</th>
+                                                <th>Toplantı Süresi</th>
+                                                <th>Toplantı Tarihi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.PlanningDate.Year != 1)
+                                            {
+                                                <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate</td>  <td><button type="submit" class="btn btn-primary">Oyla</button></td></tr>
+                                            }
+                                            @if (Model.PlanningDate2.Year != 1)
+                                            {
+                                                <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate2</td>  <td><button type="submit" class="btn btn-primary">Oyla</button></td></tr>
+
+                                            }
+                                            @if (Model.PlanningDate3.Year != 1)
+                                            {
+                                                <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate3</td>  <td><button type="submit" class="btn btn-primary">Oyla</button></td></tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
             </div>
+            <footer class="footer">
+                <div class="container-fluid clearfix">
+                    <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin templates </a> from Bootstrapdash.com</span>
+                </div>
+            </footer>
         </div>
     </div>
-</div>
 
-
-
-
-
-
-
-
+    <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/assets/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/assets/js/off-canvas.js"></script>
+    <script src="/assets/js/hoverable-collapse.js"></script>
+    <script src="/assets/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="/assets/js/sweetalert.min.js"></script>
+    @*<script src="/assets/js/dashboard.js"></script>*@
+    <script src="/assets/js/todolist.js"></script>
+    <script src="/js/site.js"></script>
+    <!-- End custom js for this page -->
+</body>
+</html>

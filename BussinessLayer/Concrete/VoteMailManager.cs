@@ -38,7 +38,7 @@ namespace BussinessLayer.Concrete
 
         public void Remove(VoteMail t)
         {
-            throw new NotImplementedException();
+            _voteMailDal.Delete(t);
         }
 
         public void Update(VoteMail t)

@@ -73,10 +73,9 @@
                                 <p><span>50</span> mail hakkınız kaldı.</p>
                                 <button  id="mailOnay" type="button" onclick="createTagForPost()">Onayla</button>
                                 
-                                <button>Tümünü Temizle</button>
+                                <button id="clearBtn">Tümünü Temizle</button>
                             </div>
                         </div>
-
                     </div>
                     <div class="d-none">
                         <select class="form-control1" aria-label="SendMails" name="SendMails" id="sendMailInput" multiple>
@@ -155,7 +154,7 @@
 
     input.addEventListener("keyup", addTag);
 
-    const removeBtn = document.querySelector(".details button");
+    const removeBtn = document.querySelector(".details button#clearBtn");
     removeBtn.addEventListener("click", () => {
         tags.length = 0;
         ul.querySelectorAll("li").forEach(li => li.remove());
