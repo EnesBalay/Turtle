@@ -20,7 +20,7 @@
             <div class="card-body">
                 <h4 class="card-title">Toplantı Oluştur</h4>
                 <br>
-                    <form method="post" class="forms-sample" action="/Meeting/AddMeeting" enctype="multipart/form-data">
+                    <form class="forms-sample" id="addMeetingForm" action="">
                     <div class="form-group">
                         <label for="MeetingName">Toplantı Başlığı</label>
                         <input type="text" class="form-control" name="MeetingName" id="MeetingName" placeholder="Toplantı Başlığı" maxlength="32" minlength="3" required>
@@ -32,8 +32,8 @@
                         @Html.ValidationMessageFor(x=>x.Description,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
-                        <label for="Location">Toplantı Konumu (İsteğe Bağlı)</label>
-                        <input type="text" class="form-control" name="Location" id="Location" placeholder="Toplantı Konumu">
+                        <label for="Location">Toplantı Konumu</label>
+                        <input type="text" class="form-control" name="Location" id="Location" placeholder="Toplantı Konumu" required>
                         @Html.ValidationMessageFor(x=>x.Location,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
@@ -70,9 +70,7 @@
                                 <ul id="sendMails"><input id="mailInput" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" /></ul>
                             </div>
                             <div class="details">
-                                <p><span>50</span> mail hakkınız kaldı.</p>
-                                <button  id="mailOnay" type="button" onclick="createTagForPost()">Onayla</button>
-                                
+                                <p><span>50</span> mail hakkınız kaldı.</p>                                
                                 <button id="clearBtn">Tümünü Temizle</button>
                             </div>
                         </div>
@@ -81,8 +79,7 @@
                         <select class="form-control1" aria-label="SendMails" name="SendMails" id="sendMailInput" multiple>
                         </select>
                     </div>
-                    <p class="text-success">@ViewBag.MeetingSuccess</p>
-                    <button type="submit" class="btn btn-gradient-primary mr-2">Oluştur</button>
+                    <input type="submit" value="Oluştur" class="btn btn-gradient-primary mr-2"></input>
                     <button class="btn btn-light">İptal</button>
                 </form>
             </div>
@@ -161,13 +158,5 @@
         countTags();
     });
 
-                if (document.querySelector('#pderr').textContent=="The value '' is invalid."){
-        document.querySelector('#pderr').style.display = "none";
-             }
-    if (document.querySelector('#pd2err').textContent == "The value '' is invalid.") {
-        document.querySelector('#pd2err').style.display = "none";
-             }        
-             if (document.querySelector('#pd3err').textContent=="The value '' is invalid."){
-        document.querySelector('#pd3err').style.display = "none";
-             }
+             
 </script>

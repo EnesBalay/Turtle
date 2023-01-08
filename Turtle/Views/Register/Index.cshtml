@@ -39,7 +39,7 @@
                             </div>
                            
                             <h6 class="font-weight-light">Aşağıdaki bilgileri doldurarak kolayca kayıt olabilirsiniz.</h6>
-                            <form method="post" class="form-sample" enctype="multipart/form-data">
+                            <form id="registerForm" class="form-sample" enctype="multipart/form-data">
                     <div class="form-group">
                         @Html.LabelFor(x=>x.Name,"Ad")
                         @Html.TextBoxFor(x=>x.Name,new{placeholder = "Ad", @class="form-control"})
@@ -75,8 +75,7 @@
                                     </div>
                                 </div>*@
                                 <div class="mt-3">
-                                   <p class="text-success">@ViewBag.RegisterSuccess</p>
-                                    <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" >KAYIT OL</button>
+                                    <button type="button" onclick="RegisterAjax()" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">KAYIT OL</button>
                                 </div>
                                 <div class="text-center mt-4 font-weight-light">
                                     Zaten hesabınız var mı? <a href="/Login" class="text-primary">Giriş Yap</a>
@@ -96,6 +95,7 @@
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <!-- End plugin js for this page -->
+    <script src="/assets/js/sweetalert.min.js"></script>
     <!-- inject:js -->
     <script src="../../assets/js/off-canvas.js"></script>
     <script src="../../assets/js/hoverable-collapse.js"></script>
