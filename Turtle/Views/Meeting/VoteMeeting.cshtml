@@ -92,38 +92,44 @@
 
 
                                         </p>
-                                        @if (ViewBag.VoteError2 == null)
+                                        @if (Model.FinalizeDate.Year == 1)
                                         {
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Toplantı Tarihi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (Model.PlanningDate.Year != 1)
-                                                    {
-                                                        <tr><td>@Model.PlanningDate</td>  <td><button style="float:right;" type="button" onclick="AreYouSureVoteMeeting('@ViewBag.VoterMail',1,'@Model.PlanningDate','@Model.MeetingID')" class="btn btn-primary">Oyla</button></td></tr>
-                                                    }
-                                                    @if (Model.PlanningDate2.Year != 1)
-                                                    {
-                                                        <tr><td>@Model.PlanningDate2</td>  <td><button style="float:right;" type="button" onclick="AreYouSureVoteMeeting('@ViewBag.VoterMail',2,'@Model.PlanningDate2','@Model.MeetingID')" class="btn btn-primary">Oyla</button></td></tr>
+                                            @if (ViewBag.VoteError2 == null)
+                                            {
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Toplantı Tarihi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.PlanningDate.Year != 1)
+                                                        {
+                                                            <tr><td>@Model.PlanningDate</td>  <td><button style="float:right;" type="button" onclick="AreYouSureVoteMeeting('@ViewBag.VoterMail',1,'@Model.PlanningDate','@Model.MeetingID')" class="btn btn-primary">Oyla</button></td></tr>
+                                                        }
+                                                        @if (Model.PlanningDate2.Year != 1)
+                                                        {
+                                                            <tr><td>@Model.PlanningDate2</td>  <td><button style="float:right;" type="button" onclick="AreYouSureVoteMeeting('@ViewBag.VoterMail',2,'@Model.PlanningDate2','@Model.MeetingID')" class="btn btn-primary">Oyla</button></td></tr>
 
-                                                    }
-                                                    @if (Model.PlanningDate3.Year != 1)
-                                                    {
-                                                        <tr><td>@Model.PlanningDate3</td>  <td><button style="float:right;" type="button" onclick="AreYouSureVoteMeeting('@ViewBag.VoterMail',3,'@Model.PlanningDate3','@Model.MeetingID')" class="btn btn-primary">Oyla</button></td></tr>
-                                                    }
+                                                        }
+                                                        @if (Model.PlanningDate3.Year != 1)
+                                                        {
+                                                            <tr><td>@Model.PlanningDate3</td>  <td><button style="float:right;" type="button" onclick="AreYouSureVoteMeeting('@ViewBag.VoterMail',3,'@Model.PlanningDate3','@Model.MeetingID')" class="btn btn-primary">Oyla</button></td></tr>
+                                                        }
 
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="text-danger">@ViewBag.VoteError2</h3>
+                                                <p><b>Oyladığınız Tarih:</b> @ViewBag.VoteDate</p>
+                                                <p class="text-info">Toplantı oylama sonucu mail ile gönderilecektir!</p>
+                                            }
+                                        }else{
+                                            <h4 class="text-info">Toplantı oylaması tamamlanmıştır. Belirlenen tarih ve saat: <span class="text-success">@Model.FinalizeDate</span></h4>
                                         }
-                                        else
-                                        {
-                                            <h3 class="text-danger">@ViewBag.VoteError2</h3>
-                                            <p><b>Oyladığınız Tarih:</b> @ViewBag.VoteDate</p>
-                                            <p class="text-info">Toplantı oylama sonucu mail ile gönderilecektir!</p>
-                                        }
+                                        
                                     </div>
                                 </div>
 

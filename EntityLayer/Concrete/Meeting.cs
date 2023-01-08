@@ -11,7 +11,7 @@ namespace EntityLayer.Concrete
         public DateTime PlanningDate { get; set; }
         public DateTime PlanningDate2 { get; set; }
         public DateTime PlanningDate3 { get; set; }
-
+        public DateTime FinalizeDate { get; set; }
         public DateTime? CreateDate { get; set; }
         public string Location { get; set; }
         public int MeetingDuration { get; set; }

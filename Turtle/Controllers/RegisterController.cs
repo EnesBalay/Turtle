@@ -22,8 +22,8 @@ namespace Turtle.Controllers
             else
             {
                 ViewBag.RegisterSuccess = ' ';
-                return View();
             }
+                return View();
                 
         }
         [HttpPost]
@@ -53,6 +53,32 @@ namespace Turtle.Controllers
                 }
             }
             return View();
+        }
+        [AllowAnonymous]
+        public IActionResult RegisterAjax(User newUser)
+        {
+            UserValidator uv = new UserValidator();
+            ValidationResult results = uv.Validate(newUser);
+            if (results.IsValid)
+            {
+                User user = new User();
+                user.UserName= newUser.UserName;
+                user.Name = newUser.Name;
+                user.Email = newUser.Email;
+                user.Password = newUser.Password;
+                user.Surname = newUser.Surname;
+                user.AccountType = "User";
+                userManager.Add(user);
+                return Json(new { success = "true" });
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return Json(new { success = "false" });
         }
 
     }

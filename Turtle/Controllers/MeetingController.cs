@@ -6,6 +6,7 @@ using BussinessLayer.ValidationRules;
 using FluentValidation.Results;
 using Microsoft.Exchange.WebServices.Data;
 using Microsoft.AspNetCore.Authorization;
+using NuGet.Protocol;
 
 namespace Turtle.Controllers
 
@@ -23,7 +24,7 @@ namespace Turtle.Controllers
                 meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
             }
             return View(allMeetings);
-        } 
+        }
         public IActionResult List()
         {
             var allMeetings = meetingManager.GetMeetingsByUserId(GetCurrentUser().UserID);
@@ -57,43 +58,32 @@ namespace Turtle.Controllers
         {
             var userValues = GetCurrentUser();
             MeetingValidator uv = new MeetingValidator();
-            ValidationResult results = uv.Validate(newMeeting);
-            if (results.IsValid)
+            Meeting meeting = new Meeting();
+            meeting.MeetingName = newMeeting.MeetingName;
+            meeting.MeetingDuration = newMeeting.MeetingDuration;
+            meeting.CreateDate = DateTime.Now;
+            meeting.PlanningDate = newMeeting.PlanningDate;
+            meeting.PlanningDate2 = newMeeting.PlanningDate2;
+            meeting.PlanningDate3 = newMeeting.PlanningDate3;
+            meeting.Location = newMeeting.Location;
+            meeting.Description = newMeeting.Description;
+            meeting.UserID = userValues.UserID;
+            meeting.Status = true;
+            var newMeetingId = meetingManager.AddReturnId(meeting);
+            string htmlBody = "<b>Toplantı Adı:</b>" + meeting.MeetingName + "<br/><b>Toplantı Konumu:</b>" + meeting.Location + "<br />" + "<b>Toplantı Detayı:</b>" + meeting.Description + "<br />Toplantıyı oylamak için <a href='http://localhost:5254/Meeting/VoteMeeting/" + meeting.MeetingID + "'>tıklayınız.</a>";
+            foreach (var item in SendMails)
             {
-                Meeting meeting = new Meeting();
-                meeting.MeetingName = newMeeting.MeetingName;
-                meeting.MeetingDuration = newMeeting.MeetingDuration;
-                meeting.CreateDate = DateTime.Now;
-                meeting.PlanningDate = newMeeting.PlanningDate;
-                meeting.PlanningDate2 = newMeeting.PlanningDate2;
-                meeting.PlanningDate3 = newMeeting.PlanningDate3;
-                meeting.Location = newMeeting.Location;
-                meeting.Description = newMeeting.Description;
-                meeting.UserID = userValues.UserID;
-                var newMeetingId = meetingManager.AddReturnId(meeting);
-                foreach (var item in SendMails)
-                {
-                    VoteMail mail = new VoteMail();
-                    mail.email = item;
-                    mail.status = true;
-                    mail.MeetingId = newMeetingId;
-                    VoteMailManager.Add(mail);
-                    sendToMail(item, meeting);
-                }
-                ViewBag.MeetingSuccess = "Toplantı oluşturuldu.";
+                VoteMail mail = new VoteMail();
+                mail.email = item;
+                mail.status = true;
+                mail.MeetingId = newMeetingId;
+                VoteMailManager.Add(mail);
+                sendToMail(item, meeting, htmlBody);
             }
-            else
-            {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
-            }
-
-            return View();
+            return Json(new { success = "true" });
         }
 
-        public void sendToMail(string mail, Meeting meeting)
+        public void sendToMail(string mail, Meeting meeting, string htmlBody)
         {
             var mailList = mail.Split(';').ToList();
             // Outlook'a erişmek için ExchangeService nesnesi oluşturun ve gerekli bilgileri doldurun
@@ -108,7 +98,7 @@ namespace Turtle.Controllers
                 email.ToRecipients.Add(mailAddress);
             }
             email.Subject = "Turtle";
-            email.Body = new MessageBody("<b>Toplantı Adı:</b>" + meeting.MeetingName + "<br/><b>Toplantı Konumu:</b>" + meeting.Location + "<br />" + "<b>Toplantı Detayı:</b>" + meeting.Description + "<br />Toplantıyı oylamak için <a href='http://localhost:5254/Meeting/VoteMeeting/" + meeting.MeetingID+ "'>tıklayınız.</a>");
+            email.Body = new MessageBody(htmlBody);
 
 
             // E-postayı gönderin
@@ -122,8 +112,8 @@ namespace Turtle.Controllers
             meetingValue.Status = false;
             meetingManager.Update(meetingValue);
             return RedirectToAction("List", "Meeting");
-        }    
-        
+        }
+
         public IActionResult ActivateMeeting(int id)
         {
             var meetingValue = meetingManager.GetById(id);
@@ -164,26 +154,26 @@ namespace Turtle.Controllers
             {
                 if (item.email == voterMail)
                 {
-                        ViewBag.VoterMail = voterMail;
-                    if (item.status==false)
+                    ViewBag.VoterMail = voterMail;
+                    if (item.status == false)
                     {
                         ViewBag.VoteError2 = "Bu toplantıyı daha önce oyladınız. Tekrar oylayamazsınız!";
                         DateTime chosedDate = meeting.PlanningDate;
-                        if (item.ChoosedDate==1)
+                        if (item.ChoosedDate == 1)
                         {
                             chosedDate = meeting.PlanningDate;
-                        }  
-                        if (item.ChoosedDate==2)
+                        }
+                        if (item.ChoosedDate == 2)
                         {
                             chosedDate = meeting.PlanningDate2;
-                        } 
-                        if (item.ChoosedDate==3)
+                        }
+                        if (item.ChoosedDate == 3)
                         {
                             chosedDate = meeting.PlanningDate3;
                         }
                         ViewBag.VoteDate = chosedDate;
                     }
-                    
+
                     break;
                 }
             }
@@ -238,8 +228,10 @@ namespace Turtle.Controllers
 
                     VoteMailManager.Add(mail);
                 }
+                string htmlBody = "<b>Toplantı Adı:</b>" + meeting.MeetingName + "<br/><b>Toplantı Konumu:</b>" + meeting.Location + "<br />" + "<b>Toplantı Detayı:</b>" + meeting.Description + "<br />Toplantıyı oylamak için <a href='http://localhost:5254/Meeting/VoteMeeting/" + meeting.MeetingID + "'>tıklayınız.</a>";
+
                 meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
-                foreach (var m in meeting.Mails) { sendToMail(m.email, meeting); }
+                foreach (var m in meeting.Mails) { sendToMail(m.email, meeting, htmlBody); }
                 meetingManager.Update(meeting);
                 ViewBag.MeetingSuccess = "Toplantı düzenlendi.";
             }
@@ -247,14 +239,15 @@ namespace Turtle.Controllers
             {
                 foreach (var item in results.Errors)
                 {
-                    if (item.ErrorMessage!= "The value '' is invalid.")
+                    if (item.ErrorMessage != "The value '' is invalid.")
                     {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                        ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
 
                     }
                 }
+                return Json(new { success = "false" });
             }
-            return View(meeting);
+            return Json(new { success = "true" });
         }
 
         public IActionResult Detail(int id)
@@ -270,14 +263,29 @@ namespace Turtle.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult VoteAMeeting(string email,int dateIndex, int meetingID)
+        public IActionResult VoteAMeeting(string email, int dateIndex, int meetingID)
         {
-            var voteMeeting = VoteMailManager.GetVoteMailByMail(email,meetingID);
+            var voteMeeting = VoteMailManager.GetVoteMailByMail(email, meetingID);
             voteMeeting.ChoosedDate = dateIndex;
-            voteMeeting.status= false;
+            voteMeeting.status = false;
             VoteMailManager.Update(voteMeeting);
-            return Json(new { success = "true"});
+            return Json(new { success = "true" });
         }
-        
+
+        public IActionResult FinalizeMeeting(int meetingId, string dateTime)
+        {
+            var meeting = meetingManager.GetById(meetingId);
+            meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
+            meeting.FinalizeDate = Convert.ToDateTime(dateTime);
+            meetingManager.Update(meeting);
+            ViewBag.VotingFinished = "Oylama Tamamlanmıştır!";
+            string htmlBody = "<b>Toplantı Adı: </b>" + meeting.MeetingName + "<br/><b>Toplantı Konumu: </b>" + meeting.Location + "<br />" + "<b>Toplantı Detayı: </b>" + meeting.Description + "<br /><h3 style='color:green;'>Toplantı oylaması tamamlanmıştır.</h3><b>Belirlenen tarih ve saat: </b>" + meeting.FinalizeDate;
+            foreach (var mail in meeting.Mails)
+            {
+                sendToMail(mail.email, meeting, htmlBody);
+            }
+            return Redirect("/Meeting/Detail/" + meetingId);
+        }
+
     }
 }
