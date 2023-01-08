@@ -44,9 +44,7 @@ namespace Turtle.Controllers
                 var useridentity = new ClaimsIdentity(claims, "a");
                 ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
                 await HttpContext.SignInAsync(principal);
-                ViewBag.LoginSuccessUser = "Giriş Başarılı!";
-                ViewBag.AccountType = "User";
-                ViewBag.UsernameUser = p.UserName;
+                return RedirectToAction("Index", "Home");
             }else{
                     ViewBag.LoginErrorUser = "Kullanıcı adı ya da şifre hatalı!";
                     ViewBag.AccountType = "User";

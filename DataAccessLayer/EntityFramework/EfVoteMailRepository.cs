@@ -12,10 +12,16 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfVoteMailRepository : GenericRepository<VoteMail>, IVoteMailDal
     {
+      
         public List<VoteMail> GetVoteMailsByMeetingId(int meetingId)
         {
             using var c = new Context();
             return c.VoteMails.Where(x => x.MeetingId == meetingId).ToList();
+        }
+        public VoteMail GetVoteMailByMail(string mail,int meetingId)
+        {
+            using var c = new Context();
+            return c.VoteMails.Where(x => x.MeetingId == meetingId).FirstOrDefault(x=>x.email==mail);
         }
     }
 }

@@ -1,4 +1,9 @@
-﻿@model List<EntityLayer.Concrete.Meeting>
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<EntityLayer.Concrete.Meeting>
 
 @{
 }
@@ -13,15 +18,9 @@
         <div class="card">
             <div class="card-body">
                 @{
-                    bool isNotActivate = false;
+                    bool isActivate = true;
                 }
-                @if (Model.Count == 0 || isNotActivate == false)
-                {
-                    <h3 class="text-danger"> Herhangi bir toplantı bulunamadı.</h3>
-                }
-                else
-                {
-                    <table class="table table-hover">
+                    <table class="table table-hover table-danger">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -35,9 +34,9 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                if (item.Status)
+                                if (!item.Status)
                                 {
-                                    isNotActivate = true;
+                                    isActivate = false;
                                     <tr>
                                         <td>
                                             @item.MeetingID
@@ -63,20 +62,18 @@
                             @item.Status
                             </td>*@
                                         <td>
-                                            <a href="/Meeting/Detail/@item.MeetingID" class="btn btn-info"><i class="mdi mdi-info"></i> Göster</a>
-                                            <a href="/Meeting/EditMeeting/@item.MeetingID" class="btn btn-primary"><i class="mdi mdi-info"></i> Düzenle</a>
-                                            @*<a href="/Meeting/ActivateMeeting/@item.MeetingID" class="btn btn-info"><i class="mdi mdi-info"></i> Aktif Et</a>*@
-                                            <button onclick="AreYouSureDeleteMeeting(this)" class="btn btn-danger"><i class="mdi mdi-delete"></i> Sil</button>
+                                            <a href="/Meeting/ActivateMeeting/@item.MeetingID" class="btn btn-success"><i class="mdi mdi-again"></i>Tekrar Aktif Et</a>
+                                            <a href="/Meeting/EditMeeting/@item.MeetingID" class="btn btn-info"><i class="mdi mdi-info"></i> Düzenle</a>
                                         </td>
                                     </tr>
                                 }
                             }
                         </tbody>
-
-
                     </table>
+                @if (isActivate == true)
+                {
+                        <h3 class="text-danger mt-3"> Silinmiş toplantı bulunamadı.</h3>
                 }
-              
             </div>
         </div>
     </div>

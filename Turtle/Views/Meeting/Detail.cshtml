@@ -1,0 +1,74 @@
+﻿@model EntityLayer.Concrete.Meeting
+
+@{
+}
+
+
+
+
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/thinline.css">
+<link rel="stylesheet" href="/assets/css/mail-input.css">
+
+<div class="page-header">
+
+    <nav aria-label="breadcrumb">
+
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    <b>Toplantı Adı:</b> @Model.MeetingName
+                    <br />
+                    <b>Toplantı Açıklaması:</b> @Model.Description
+                    <br />
+                    <b>Toplantı Süresi:</b> @Model.MeetingDuration
+                    <br />
+                    <b>Toplantı Konumu:</b> @Model.Location
+                    <br />
+                    <b>Toplantı Katılımcıları:</b>
+                    @{
+                        var count = 0;
+                    }
+                    @foreach (var item in Model.Mails)
+                    {
+                        <span>@item.email</span> @if (Model.Mails.Count > count + 1)
+                        {
+                            <span>,</span>
+                        }
+                        count++;
+                    }
+                </p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+
+                            <th>Toplantı Adı</th>
+                            <th>Toplantı Süresi</th>
+                            <th>Toplantı Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.PlanningDate.Year != 1)
+                        {
+                            <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate</td>  <td><button type="submit" class="btn btn-primary">Oyla</button></td></tr>
+                        }
+                        @if (Model.PlanningDate2.Year != 1)
+                        {
+                            <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate2</td>  <td><button type="submit" class="btn btn-primary">Oyla</button></td></tr>
+
+                        }
+                        @if (Model.PlanningDate3.Year != 1)
+                        {
+                            <tr><td>@Model.MeetingName</td><td>@Model.MeetingDuration</td><td>@Model.PlanningDate3</td>  <td><button type="submit" class="btn btn-primary">Oyla</button></td></tr>
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

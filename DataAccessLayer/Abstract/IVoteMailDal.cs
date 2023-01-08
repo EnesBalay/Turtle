@@ -10,5 +10,6 @@ namespace DataAccessLayer.Abstract
     public interface IVoteMailDal:IGenericDal<VoteMail>
     {
         public List<VoteMail> GetVoteMailsByMeetingId(int meetingId);
+        public VoteMail GetVoteMailByMail(string mail,int meetingId);
     }
 }
