@@ -10,5 +10,6 @@ namespace BussinessLayer.Abstract
     public interface IVoteMailService:IGenericService<VoteMail>
     {
         public List<VoteMail> GetVoteMailsByMeetingId(int id);
+        public VoteMail GetVoteMailByMail(string email,int meetingId);
     }
 }

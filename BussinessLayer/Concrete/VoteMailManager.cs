@@ -31,6 +31,11 @@ namespace BussinessLayer.Concrete
             return _voteMailDal.GetAll();
         }
 
+        public VoteMail GetVoteMailByMail(string mail, int meetingId)
+        {
+            return _voteMailDal.GetVoteMailByMail(mail,meetingId);
+        }
+
         public List<VoteMail> GetVoteMailsByMeetingId(int id)
         {
             return _voteMailDal.GetVoteMailsByMeetingId(id);
@@ -43,7 +48,7 @@ namespace BussinessLayer.Concrete
 
         public void Update(VoteMail t)
         {
-            throw new NotImplementedException();
+            _voteMailDal.Update(t);
         }
     }
 }

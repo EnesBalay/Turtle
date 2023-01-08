@@ -14,7 +14,17 @@ namespace Turtle.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return View();
+            var userValues = userManager.GetUserByIdentityName(User.Identity.Name);
+            if (userValues != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.RegisterSuccess = ' ';
+                return View();
+            }
+                
         }
         [HttpPost]
         [AllowAnonymous]
@@ -44,5 +54,6 @@ namespace Turtle.Controllers
             }
             return View();
         }
+
     }
 }

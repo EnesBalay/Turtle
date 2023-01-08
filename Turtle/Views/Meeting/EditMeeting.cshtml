@@ -44,19 +44,22 @@
                         <label for="PlanningDate">Toplantı Tarihi</label>
                         <p class="form-control" id="currentPD">@Model.PlanningDate</p>
                         @Html.TextBoxFor(x=>x.PlanningDate, new {@value="{"+@Model.PlanningDate+"}", @class="form-control",@style="display:none;margin-bottom:10px;" ,@type="datetime-local",@placeholder="Toplantı Tarihi"})
-                        <button type="button" class="btn btn-primary" id="pDate" onclick="ChangeToPDate('#PlanningDate','none','#currentPD',this)">Düzenle</button>
+                        @Html.ValidationMessageFor(x=>x.PlanningDate,"",new{@class="text-danger",@id="pderr"})
+                        <button type="button" class="btn btn-primary" id="pDate" onclick="ChangeToPDate('#PlanningDate','none','#currentPD',this,'#pderr')">Düzenle</button>
                     </div>
                     <div class="form-group">
                         <label for="PlanningDate2">Toplantı Tarihi</label>
                         <p class="form-control" id="currentPD2">@Model.PlanningDate2</p>
                         @Html.TextBoxFor(x=>x.PlanningDate2, new {@value="{"+@Model.PlanningDate2+"}", @class="form-control",@style="display:none;margin-bottom:10px;" ,@type="datetime-local",@placeholder="Toplantı Tarihi"})
-                        <button type="button" class="btn btn-primary" id="pDate2" onclick="ChangeToPDate('#PlanningDate2','none','#currentPD2',this)">Düzenle</button>
+                        @Html.ValidationMessageFor(x=>x.PlanningDate2,"",new{@class="text-danger",@id="pd2err"})
+                        <button type="button" class="btn btn-primary" id="pDate2" onclick="ChangeToPDate('#PlanningDate2','none','#currentPD2',this,'#pd2err')">Düzenle</button>
                     </div>
                     <div class="form-group">
                         <label for="PlanningDate3">Toplantı Tarihi</label>
                         <p class="form-control" id="currentPD3">@Model.PlanningDate3</p>
                         @Html.TextBoxFor(x=>x.PlanningDate3, new {@value="{"+@Model.PlanningDate3+"}", @class="form-control",@style="display:none;margin-bottom:10px;" ,@type="datetime-local",@placeholder="Toplantı Tarihi"})
-                        <button type="button" class="btn btn-primary" id="pDate3" onclick="ChangeToPDate('#PlanningDate3','none','#currentPD3',this)">Düzenle</button>
+                        @Html.ValidationMessageFor(x=>x.PlanningDate3,"",new{@class="text-danger",@id="pd3err"})
+                        <button type="button" class="btn btn-primary" id="pDate3" onclick="ChangeToPDate('#PlanningDate3','none','#currentPD3',this,'#pd3err')">Düzenle</button>
                     </div>
                     <div class="form-group">
                         <label for="MeetingDuration">Toplantı Süresi</label>
@@ -127,7 +130,7 @@
                     </div>
                     <p class="text-success">@ViewBag.MeetingSuccess</p>
                     <button type="submit" class="btn btn-gradient-primary mr-2">GÜNCELLE</button>
-                    <button class="btn btn-light">İptal</button>
+                    <a href="/Meeting" class="btn btn-light">İptal</a>
                 }
             </div>
         </div>
@@ -204,7 +207,7 @@
         });
     }
 
-    function ChangeToPDate(id, state, text, button) {
+    function ChangeToPDate(id, state, text, button,err) {
         if (state == 'none') {
             var btnFunction = "ChangeToPDate('" + id + "','block','" + text + "',this)"
             document.querySelector(id).style.display = "block";
@@ -213,6 +216,7 @@
             button.classList.add('btn-danger');
             button.setAttribute("onclick", btnFunction)
             document.querySelector(text).style.display="none";
+            document.querySelector(err).style.display = "block";
         }
 
         if (state == 'block') {
@@ -223,6 +227,8 @@
             button.classList.add('btn-primary');
             button.setAttribute("onclick", btnFunction)
             document.querySelector(text).style.display = "block";
+            document.querySelector(err).style.display = "none";
+            
         }
     }
 
@@ -233,4 +239,13 @@
             createTag();
         </text>
     }
+            if (document.querySelector('#pderr').textContent=="The value '' is invalid."){
+        document.querySelector('#pderr').style.display = "none";
+             }
+    if (document.querySelector('#pd2err').textContent == "The value '' is invalid.") {
+        document.querySelector('#pd2err').style.display = "none";
+             }        
+             if (document.querySelector('#pd3err').textContent=="The value '' is invalid."){
+        document.querySelector('#pd3err').style.display = "none";
+             }
 </script>

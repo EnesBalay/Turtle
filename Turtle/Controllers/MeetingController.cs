@@ -23,7 +23,27 @@ namespace Turtle.Controllers
                 meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
             }
             return View(allMeetings);
+        } 
+        public IActionResult List()
+        {
+            var allMeetings = meetingManager.GetMeetingsByUserId(GetCurrentUser().UserID);
+            foreach (var meeting in allMeetings)
+            {
+                meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
+            }
+            return View(allMeetings);
         }
+
+        public IActionResult DisabledMeetings()
+        {
+            var allMeetings = meetingManager.GetMeetingsByUserId(GetCurrentUser().UserID);
+            foreach (var meeting in allMeetings)
+            {
+                meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
+            }
+            return View(allMeetings);
+        }
+
         public User GetCurrentUser()
         {
             return userManager.GetUserByIdentityName(User.Identity.Name);
@@ -88,7 +108,7 @@ namespace Turtle.Controllers
                 email.ToRecipients.Add(mailAddress);
             }
             email.Subject = "Turtle";
-            email.Body = new MessageBody("<b>Toplantı Adı:</b>" + meeting.MeetingName + "<br/><b>Toplantı Konumu:</b>" + meeting.Location + "<br />" + "<b>Toplantı Detayı:</b>" + meeting.Description + "");
+            email.Body = new MessageBody("<b>Toplantı Adı:</b>" + meeting.MeetingName + "<br/><b>Toplantı Konumu:</b>" + meeting.Location + "<br />" + "<b>Toplantı Detayı:</b>" + meeting.Description + "<br />Toplantıyı oylamak için <a href='http://localhost:5254/Meeting/VoteMeeting/" + meeting.MeetingID+ "'>tıklayınız.</a>");
 
 
             // E-postayı gönderin
@@ -99,9 +119,21 @@ namespace Turtle.Controllers
         public IActionResult DeleteMeeting(int id)
         {
             var meetingValue = meetingManager.GetById(id);
-            meetingManager.Remove(meetingValue);
-            return RedirectToAction("Index", "Meeting");
+            meetingValue.Status = false;
+            meetingManager.Update(meetingValue);
+            return RedirectToAction("List", "Meeting");
+        }    
+        
+        public IActionResult ActivateMeeting(int id)
+        {
+            var meetingValue = meetingManager.GetById(id);
+            meetingValue.Status = true;
+            meetingManager.Update(meetingValue);
+            return RedirectToAction("DisabledMeetings", "Meeting");
         }
+
+
+
         [AllowAnonymous]
         public IActionResult VoteMeeting(int id = 0)
         {
@@ -132,11 +164,30 @@ namespace Turtle.Controllers
             {
                 if (item.email == voterMail)
                 {
-                    ViewBag.VoterMail = voterMail;
-                    ViewBag.VoteError=null;
+                        ViewBag.VoterMail = voterMail;
+                    if (item.status==false)
+                    {
+                        ViewBag.VoteError2 = "Bu toplantıyı daha önce oyladınız. Tekrar oylayamazsınız!";
+                        DateTime chosedDate = meeting.PlanningDate;
+                        if (item.ChoosedDate==1)
+                        {
+                            chosedDate = meeting.PlanningDate;
+                        }  
+                        if (item.ChoosedDate==2)
+                        {
+                            chosedDate = meeting.PlanningDate2;
+                        } 
+                        if (item.ChoosedDate==3)
+                        {
+                            chosedDate = meeting.PlanningDate3;
+                        }
+                        ViewBag.VoteDate = chosedDate;
+                    }
+                    
                     break;
                 }
             }
+
             return View(meeting);
         }
         public IActionResult EditMeeting(int id)
@@ -196,15 +247,37 @@ namespace Turtle.Controllers
             {
                 foreach (var item in results.Errors)
                 {
+                    if (item.ErrorMessage!= "The value '' is invalid.")
+                    {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+
+                    }
                 }
             }
             return View(meeting);
         }
 
-        public IActionResult VoteChoose(int p)
+        public IActionResult Detail(int id)
         {
-            return View(p);
+            var meeting = meetingManager.GetById(id);
+            meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
+            return View(meeting);
         }
+        [HttpGet]
+        public IActionResult VoteAMeeting()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult VoteAMeeting(string email,int dateIndex, int meetingID)
+        {
+            var voteMeeting = VoteMailManager.GetVoteMailByMail(email,meetingID);
+            voteMeeting.ChoosedDate = dateIndex;
+            voteMeeting.status= false;
+            VoteMailManager.Update(voteMeeting);
+            return Json(new { success = "true"});
+        }
+        
     }
 }
