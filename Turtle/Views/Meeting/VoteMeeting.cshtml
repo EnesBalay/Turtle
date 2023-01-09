@@ -6,12 +6,6 @@
     Layout = null;
 }
 <!DOCTYPE html>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    Layout = null;
-}
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -36,7 +30,7 @@
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper d-flex align-items-center auth">
                 <div class="row flex-grow">
-                    @if (ViewBag.VoterMail == null)
+                    @if (ViewBag.VoterMail == " ")
                     {
                         <div class="col-lg-4 mx-auto">
                             <div class="auth-form-light text-left p-5">
@@ -94,7 +88,7 @@
                                         </p>
                                         @if (Model.FinalizeDate.Year == 1)
                                         {
-                                            @if (ViewBag.VoteError2 == null)
+                                            @if (ViewBag.VoteError2 == " ")
                                             {
                                                 <table class="table table-hover">
                                                     <thead>

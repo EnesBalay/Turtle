@@ -41,6 +41,7 @@ namespace Turtle.Controllers
                 user.Password = newUser.Password;
                 user.Surname = newUser.Surname;
                 user.AccountType = "User";
+                user.UserStatus = true;
                 userManager.Add(user);
                 ViewBag.RegisterSuccess = "Kayıt Başarılı";
                 return View();

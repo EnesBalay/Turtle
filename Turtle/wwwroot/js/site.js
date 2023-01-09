@@ -131,6 +131,7 @@ function DoYouUpdateMeeting() {
                                 icon: "success",
                                 buttons: false
                             });
+                            setTimeout(() => { window.location.href = "/Meeting/List"; }, 3000);
                         },
                         error: function () {
                             swal("İşleminiz gerçekleşmemiştir lütfen sonra tekrar deneyiniz.", {

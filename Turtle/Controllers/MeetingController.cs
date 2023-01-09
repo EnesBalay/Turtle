@@ -127,8 +127,8 @@ namespace Turtle.Controllers
         [AllowAnonymous]
         public IActionResult VoteMeeting(int id = 0)
         {
-            ViewBag.VoterMail = null;
-            ViewBag.VoteError = null;
+            ViewBag.VoterMail = " ";
+            ViewBag.VoteError = " ";
             if (id == 0)
             {
                 return NotFound();
@@ -146,7 +146,9 @@ namespace Turtle.Controllers
         [HttpPost]
         public IActionResult VoteMeeting(Meeting meeting, string voterMail)
         {
-
+            ViewBag.VoterMail = " ";
+            ViewBag.VoteError = " ";
+            ViewBag.VoteError2 = " ";
             meeting = meetingManager.GetById(meeting.MeetingID);
             meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
             ViewBag.VoteError = "Mailiniz toplantıda kayıtlı değildir";
@@ -233,7 +235,7 @@ namespace Turtle.Controllers
                 meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
                 foreach (var m in meeting.Mails) { sendToMail(m.email, meeting, htmlBody); }
                 meetingManager.Update(meeting);
-                ViewBag.MeetingSuccess = "Toplantı düzenlendi.";
+                return Json(new { success = "true" });
             }
             else
             {
@@ -247,7 +249,6 @@ namespace Turtle.Controllers
                 }
                 return Json(new { success = "false" });
             }
-            return Json(new { success = "true" });
         }
 
         public IActionResult Detail(int id)
@@ -278,7 +279,6 @@ namespace Turtle.Controllers
             meeting.Mails = VoteMailManager.GetVoteMailsByMeetingId(meeting.MeetingID);
             meeting.FinalizeDate = Convert.ToDateTime(dateTime);
             meetingManager.Update(meeting);
-            ViewBag.VotingFinished = "Oylama Tamamlanmıştır!";
             string htmlBody = "<b>Toplantı Adı: </b>" + meeting.MeetingName + "<br/><b>Toplantı Konumu: </b>" + meeting.Location + "<br />" + "<b>Toplantı Detayı: </b>" + meeting.Description + "<br /><h3 style='color:green;'>Toplantı oylaması tamamlanmıştır.</h3><b>Belirlenen tarih ve saat: </b>" + meeting.FinalizeDate;
             foreach (var mail in meeting.Mails)
             {
