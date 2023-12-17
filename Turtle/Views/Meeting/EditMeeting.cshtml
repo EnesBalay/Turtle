@@ -31,7 +31,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Description">Toplantı Açıklaması (İsteğe Bağlı)</label>
-                        <textarea class="form-control" name="Description" value="@Model.Description" id="Description" placeholder="Toplantı Açıklaması" rows="6" minlength="3" maxlength="300"></textarea>
+                        <textarea class="form-control" name="Description" id="Description" placeholder="Toplantı Açıklaması" rows="6" minlength="3" maxlength="300">@Model.Description</textarea>
                         @Html.ValidationMessageFor(x=>x.Description,"",new{@class="text-danger"})
                     </div>
                     <div class="form-group">
@@ -70,7 +70,7 @@
                         <div class="wrapper">
                             <div class="content">
                                 <label for="ulMail">Toplantı Katılımcıları</label>
-                                <ul id="ulMail"><input id="mailInput" value="@Model.Mails" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" required /></ul>
+                                <ul id="ulMail"><input id="mailInput" value="@Model.Mails" type="text" spellcheck="false" placeholder="Her e-mail adresinden sonra virgül koyun" /></ul>
                             </div>
                             <div class="details">
                                 <p><span>50</span> mail hakkınız kaldı.</p>
